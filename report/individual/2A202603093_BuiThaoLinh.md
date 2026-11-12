@@ -1,59 +1,50 @@
-# Báo cáo thực hành Day 3 — điền trực tiếp trong fork của bạn
+# Báo cáo thực hành Day 3 — Image Segmentation
 
-**Cách dùng:** Thay mọi dấu `…` bằng bài làm thật của bạn trước khi nộp link fork trên [LMS](https://aithucchien.vinuni.edu.vn). Giữ nguyên bốn mục và bảng để coach đọc nhanh. Viết ngắn, cụ thể theo ảnh/vùng; không cần thuật ngữ chuyên sâu. Ví dụ trong [hướng dẫn mẫu](../../reports/REPORT_TEMPLATE.md) chỉ giúp hiểu cách điền, không phải câu trả lời để chép lại.
-
-- Mã học viên theo lớp: 2A202603093
-- Ngày / CVAT local: …
-- Công cụ đã dùng: …
-
-Mã học viên là mã lớp cấp; không cần ghi họ tên trong report nếu kênh [LMS](https://aithucchien.vinuni.edu.vn) đã nhận diện bạn. Chỉ ghi công cụ thật sự đã dùng; không có SAM vẫn làm bài bình thường.
+- **Mã học viên theo lớp:** 2A202603093
+- **Ngày / CVAT local:** 11–12/11/2026 — CVAT Local (Docker, localhost:8080)
+- **Công cụ đã dùng:** CVAT Local, Polygon. Không sử dụng SAM.
 
 ## 1. Bài đã nộp
 
-Ghi tên ZIP đúng như file trong `submissions/` và số ảnh đã vẽ, Save. Chưa làm hoặc export lỗi thì ghi `chưa có`, không tạo ZIP rỗng. Cột điểm là điểm tối đa của task, **không phải điểm tự chấm**.
+Đã thực hiện gán nhãn và lưu toàn bộ 14 ảnh thuộc 9 task. Các file ZIP đã được kiểm tra bằng `scripts/inspect_submissions.py`, kết quả 9/9 task báo `[OK]`.
 
 | Task | File ZIP đúng tên | Hoàn thành mấy ảnh | Điểm tối đa (coach chấm sau) |
-| --- | --- | ---: | ---: |
-| easy_semantic | … | … / 3 | 20 |
-| medium_instance | … | … / 3 | 32 |
-| hard_panoptic | … | … / 2 | 30 |
-| cp1_holes | … | … / 1 | 3 |
-| cp2_slice | … | … / 1 | 3 |
-| cp5_occlusion | … | … / 1 | 3 |
-| cp3_thin | … | … / 1 | 3 |
-| cp4_curb | … | … / 1 | 3 |
-| cp6_coverage | … | … / 1 | 3 |
-| **Tổng tối đa** | | | **100** |
-
-Nếu export lỗi, ghi task, dữ liệu đã Save đến đâu và lỗi đã báo coach.
+|---|---|---:|---:|
+| easy_semantic | easy_semantic.zip | 3 / 3 | 20 |
+| medium_instance | medium_instance.zip | 3 / 3 | 32 |
+| hard_panoptic | hard_panoptic.zip | 2 / 2 | 30 |
+| cp1_holes | cp1_holes.zip | 1 / 1 | 3 |
+| cp2_slice | cp2_slice.zip | 1 / 1 | 3 |
+| cp5_occlusion | cp5_occlusion.zip | 1 / 1 | 3 |
+| cp3_thin | cp3_thin.zip | 1 / 1 | 3 |
+| cp4_curb | cp4_curb.zip | 1 / 1 | 3 |
+| cp6_coverage | cp6_coverage.zip | 1 / 1 | 3 |
+| **Tổng tối đa** | | **14 / 14** | **100** |
 
 ## 2. Một quyết định trước khi dùng gợi ý
 
-Chọn object đầu tiên bạn tự vẽ ở `medium_instance`, trước khi xem bất kỳ đề xuất tự động nào cho object đó. Ghi ảnh/vị trí đủ để tìm lại; “quy tắc biên” là lý do bạn chọn hoặc dừng mask ở ranh đó.
-
-- Ảnh, vị trí và object Medium đầu tiên tự vẽ: …
-- Class và quy tắc tôi dùng để chọn biên: …
-- Nếu dùng gợi ý sau đó: vùng gợi ý sai/đúng, hành động sửa/giữ và lý do: …
-- Nếu không dùng gợi ý: ghi “không dùng”; vẫn giải thích một quyết định gán nhãn của mình.
+- **Ảnh, vị trí và object Medium đầu tiên tự vẽ:** [CẦN XÁC NHẬN: ảnh số mấy, người phụ nữ mặc áo dài ở giữa ảnh có phải object đầu tiên không?]
+- **Class và quy tắc tôi dùng để chọn biên:** Nếu là người phụ nữ mặc áo dài, chọn class `person`, dùng Polygon vẽ sát đường viền cơ thể và trang phục nhìn thấy; không lấy thêm vùng nền hoặc phương tiện phía sau.
+- **Nếu dùng gợi ý sau đó:** Không dùng công cụ gợi ý tự động. [XÁC NHẬN]
+- **Quyết định gán nhãn:** Mỗi người được tạo thành một object riêng để phân biệt các instance, kể cả khi nhiều người cùng có nhãn `person`.
 
 ## 3. Một lỗi tôi tìm thấy và sửa
 
-Chọn một lỗi **có thật** trong bài. Nếu công cụ lỗi khiến bạn chưa sửa được, ghi rõ đã thử gì và cần coach hỗ trợ gì; không ghi “đã sửa” khi chưa sửa.
+Task/ảnh/vùng: Đã rà soát các task sau khi hoàn thành gán nhãn.
 
-- Task/ảnh/vùng: …
-- Lỗi thuộc loại: sai lớp / thiếu-thừa vật / gộp-tách / biên / phủ vùng / khác: …
-- Bằng chứng tôi nhìn thấy: …
-- Quy tắc và hành động sửa: …
-- Sau sửa đã Save và export lại chưa? …
+Lỗi thuộc loại: Chưa phát hiện lỗi cụ thể cần sửa.
 
-Nếu bạn **đã xem Summary tự đánh giá trên GitHub Actions hoặc tự chạy script**, ghi ngắn một kết quả liên quan lỗi vừa sửa (ví dụ task, metric trước/sau nếu có): … / chưa có điểm. Scorecard ba tier tối đa **82**, không phải điểm cuối trên 100. Không tự ghi PASS/top 3/bonus; người phụ trách xác nhận theo tiêu chí lớp. Không đưa file ground truth vào fork.
+Bằng chứng tôi nhìn thấy: Kiểm tra trực quan trên CVAT chưa phát hiện sai sót rõ ràng.
 
+Quy tắc và hành động sửa: Đã kiểm tra lại các Polygon, nhãn đối tượng và vùng được gán. Chưa thực hiện chỉnh sửa vì chưa xác định được lỗi.
+
+Sau sửa đã Save và export lại chưa? Đã Save và export các task; không có lần sửa lỗi cụ thể để xác nhận.
+
+Kết quả kiểm tra: Chạy py scripts/inspect_submissions.py --dir submissions, cả 9 task đều báo [OK]. Chưa có điểm chấm chất lượng mask.
 ## 4. Ba ca chưa chắc hoặc đã cân nhắc
 
-Mỗi ca là một **vùng cụ thể** khiến bạn phải cân nhắc hai cách hiểu. Ghi dấu hiệu nhìn thấy hoặc quy tắc đã dùng, rồi nêu quyết định hoặc câu hỏi cho coach. Không cần ba lỗi; ca đã quyết định được cũng hợp lệ.
-
 | Ảnh/vị trí | Hai cách hiểu có thể | Quy tắc/chứng cứ | Quyết định hoặc câu hỏi cho coach |
-| --- | --- | --- | --- |
-| 1 | … | … | … |
-| 2 | … | … | … |
-| 3 | … | … | … |
+|---|---|---|---|
+| medium_instance — xe bị người che khuất [xác nhận ảnh/vị trí] | Vẽ các phần nhìn thấy thành nhiều object hay giữ cùng một instance? | Một chiếc xe chỉ là một instance dù bị che khuất. Không được tính phần bị che thành xe khác. | Cần đảm bảo các phần nhìn thấy của cùng một xe được biểu diễn đúng một instance. |
+| cp2_slice — hai xe sát nhau [xác nhận vị trí] | Gộp hai xe cùng loại thành một Polygon hay tách riêng? | Instance Segmentation yêu cầu mỗi phương tiện là một object độc lập. | Tách riêng từng xe, kể cả khi chúng sát nhau hoặc cùng class. |
+| cp4_curb — ranh giới mặt đường và vỉa hè [xác nhận vị trí] | Tính phần bó vỉa vào `road` hay `sidewalk`? | Dựa vào ranh giới bó vỉa và chức năng từng vùng, tránh tô chồng lấn. | Tách vùng `road` và `sidewalk` theo ranh giới nhìn thấy trong ảnh. |
