@@ -13,13 +13,13 @@
 | easy_semantic | easy_semantic.zip | 3 / 3 | 20 |
 | medium_instance | medium_instance.zip | 3 / 3 | 32 |
 | hard_panoptic | hard_panoptic.zip | 2 / 2 | 30 |
-| cp1_holes | cp1_holes.zip | 1 / 1 | 3 |
-| cp2_slice | cp2_slice.zip | 1 / 1 | 3 |
-| cp5_occlusion | cp5_occlusion.zip | 1 / 1 | 3 |
-| cp3_thin | cp3_thin.zip | 1 / 1 | 3 |
-| cp4_curb | cp4_curb.zip | 1 / 1 | 3 |
+| cp1_holes | cp1_holes.zip | 0 / 1 | 3 |
+| cp2_slice | cp2_slice.zip | 0 / 1 | 3 |
+| cp5_occlusion | cp5_occlusion.zip | 0 / 1 | 3 |
+| cp3_thin | cp3_thin.zip | 0 / 1 | 3 |
+| cp4_curb | cp4_curb.zip | 0 / 1 | 3 |
 | cp6_coverage | cp6_coverage.zip | 1 / 1 | 3 |
-| **Tổng tối đa** | | **14 / 14** | **100** |
+| **Tổng tối đa** | | **8 / 14** | **100** |
 
 ## 2. Một quyết định trước khi dùng gợi ý
 
@@ -46,5 +46,4 @@ Kết quả kiểm tra: Chạy py scripts/inspect_submissions.py --dir submissio
 | Ảnh/vị trí | Hai cách hiểu có thể | Quy tắc/chứng cứ | Quyết định hoặc câu hỏi cho coach |
 |---|---|---|---|
 | medium_instance — xe bị người che khuất [xác nhận ảnh/vị trí] | Vẽ các phần nhìn thấy thành nhiều object hay giữ cùng một instance? | Một chiếc xe chỉ là một instance dù bị che khuất. Không được tính phần bị che thành xe khác. | Cần đảm bảo các phần nhìn thấy của cùng một xe được biểu diễn đúng một instance. |
-| cp2_slice — hai xe sát nhau [xác nhận vị trí] | Gộp hai xe cùng loại thành một Polygon hay tách riêng? | Instance Segmentation yêu cầu mỗi phương tiện là một object độc lập. | Tách riêng từng xe, kể cả khi chúng sát nhau hoặc cùng class. |
-| cp4_curb — ranh giới mặt đường và vỉa hè [xác nhận vị trí] | Tính phần bó vỉa vào `road` hay `sidewalk`? | Dựa vào ranh giới bó vỉa và chức năng từng vùng, tránh tô chồng lấn. | Tách vùng `road` và `sidewalk` theo ranh giới nhìn thấy trong ảnh. |
+
